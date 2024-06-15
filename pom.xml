@@ -17,7 +17,7 @@
 
     <modules>
         <module>
-            msvc-usuarios/msvc-usuarios
+            msvc-usuario
         </module>
 
         <module>
