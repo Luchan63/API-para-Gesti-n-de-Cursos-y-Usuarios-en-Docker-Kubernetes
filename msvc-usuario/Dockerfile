@@ -19,4 +19,4 @@ COPY --from=builder /app/msvc-usuario/target/msvc-usuario-0.0.1-SNAPSHOT.jar .
 
 
 EXPOSE 8001
-ENTRYPOINT ["java", "-jar", "msvc-usuario-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "msvc-usuario-0.0.1-SNAPSHOT.jar"]
