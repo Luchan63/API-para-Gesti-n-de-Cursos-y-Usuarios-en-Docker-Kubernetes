@@ -2,12 +2,11 @@ package org.kubernetes.springcloud.mvvc.client;
 
 import org.kubernetes.springcloud.mvvc.modals.dto.Usuario;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "msvc-usuarios", url = "msvc-usuario:8001")
+@FeignClient(name = "msvc-usuarios", url = "${msvc.usuario.url}")
 public interface UsuarioClientRest {
 
     @GetMapping(value = "/{id}")
