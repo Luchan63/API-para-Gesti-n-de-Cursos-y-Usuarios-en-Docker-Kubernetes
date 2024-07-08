@@ -1,0 +1,41 @@
+version: "3.9"
+services:
+  postgres12:
+    container_name: postgres12
+    image: postgres:12-alpine
+    ports:
+      - "5532:5432"
+    environment:
+      POSTGRES_PASSWORD: 63.Lafa.96
+      POSTGRES_DB: msvc_cursos
+    volumes:
+      - data-postgres:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - spring
+  msvc-cursos:
+    container_name: msvc-cursos
+    image: luchan632/msvc-cursos:v1
+#    build:
+#      context: ./
+#      dockerfile: ./msvc-cursos/Dockerfile
+#    image: msvc-cursos:v1
+    ports:
+      - "8002:8002"
+    environment:
+      PORT: 8002
+      DB_HOST: postgres12:5432
+      DB_DATABASE: msvc_cursos
+      DB_USERNAME: postgres
+      DB_PASSWORD: 63.Lafa.96
+      USUARIOS_URL: ec2-35-180-98-103.eu-west-3.compute.amazonaws.com:8001
+    networks:
+      - spring
+    depends_on:
+      - postgres12
+    restart: always
+volumes:
+  data-postgres:
+    name: data-postgres
+networks:
+  spring:
