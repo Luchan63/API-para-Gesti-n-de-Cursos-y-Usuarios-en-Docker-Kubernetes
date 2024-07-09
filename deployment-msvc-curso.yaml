@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: msvc-curso
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: msvc-curso
+  template:
+    metadata:
+      labels:
+        app: msvc-curso
+    spec:
+      containers:
+        - image: luchan632/msvc-cursos:v1
+          name: msvc-curso
+          ports:
+          - containerPort: 8002
+
