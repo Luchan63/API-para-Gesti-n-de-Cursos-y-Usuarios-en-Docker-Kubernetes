@@ -1,20 +1,51 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: msvc-curso
+  name: msvc-cursos
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: msvc-curso
+      app: msvc-cursos
   template:
     metadata:
       labels:
-        app: msvc-curso
+        app: msvc-cursos
     spec:
       containers:
-        - image: luchan632/msvc-cursos:v1
-          name: msvc-curso
+        - image: luchan632/msvc-cursos:v3
+          name: msvc-cursos
           ports:
-          - containerPort: 8002
+            - containerPort: 8002
+          env:
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: port
+                  name: msvc-cursos
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: db_host
+                  name: msvc-cursos
+            - name: DB_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  key: database
+                  name: msvc-cursos
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  name: msvc-cursos
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: msvc-cursos
+            - name: USUARIOS_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: usuario_url
+                  name: msvc-cursos
 

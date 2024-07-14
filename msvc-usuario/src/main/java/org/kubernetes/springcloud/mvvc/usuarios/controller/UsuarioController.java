@@ -3,6 +3,7 @@ package org.kubernetes.springcloud.mvvc.usuarios.controller;
 import org.kubernetes.springcloud.mvvc.usuarios.models.entity.Ususario;
 import org.kubernetes.springcloud.mvvc.usuarios.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -17,10 +18,18 @@ public class UsuarioController
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
+    private Environment env;
+
     @GetMapping(value = "/list")
-    public List<Ususario> listar()
+    public ResponseEntity<?> listar()
     {
-        return usuarioService.listar();
+        Map<String, Object> body = new HashMap<>();
+        body.put("usuarios", usuarioService.listar());
+        body.put("pod_info", env.getProperty("MY_POD_NAME") + ": " + env.getProperty("MY_POD_IP"));
+        body.put("texto", env.getProperty("config.texto"));
+//        return Collections.singletonMap("user", usuarioService.listar());
+        return ResponseEntity.ok(body);
     }
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> detalle(@PathVariable Long id)
