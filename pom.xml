@@ -23,6 +23,10 @@
         <module>
             msvc-cursos
         </module>
+
+        <module>
+            msvc-gateway
+        </module>
     </modules>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

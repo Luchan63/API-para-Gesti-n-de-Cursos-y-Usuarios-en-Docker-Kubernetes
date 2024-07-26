@@ -1,9 +1,9 @@
 package org.kubernetes.springcloud.mvvc.usuarios.models.entity;
 
+
+import javax.validation.constraints.*;
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
+
 
 @Entity
 @Table(name = "usuarios")

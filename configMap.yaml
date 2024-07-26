@@ -1,18 +1,29 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: msvc-usuarios
-data:
-  port: "8001"
-  db_host: "mysql8:3306"
-  database: "msvc_usuarios"
-#  username: "root"
-#  password: "sasa"
-  curso_url: "msvc-cursos:8002"
-  msvc-usuarios.yml: |-
-    config:
-      texto: configurando ambiente por defecto
---- # sirve para separ cada deployment o service
+
+  apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: msvc-usuario
+  data:
+    port: "8001"
+    db_host: "mysql8:3306"
+    database: "msvc_usuarios"
+    curso_url: "msvc-cursos:8002"
+    msvc-usuario.yml: |-
+      config:
+        texto: Configurando ambiente por defecto
+      ---  
+      spring:
+        config:
+          on-activate: dev
+      config:
+        texto: Configurando ambiente de desarrollo
+      ---
+      spring:
+        config:
+          on-activate: prod
+      config:
+        texto: Configurando ambiente de produccion
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -21,7 +32,4 @@ data:
   port: "8002"
   db_host: "postgres12:5432"
   database: "msvc_cursos"
-#  username: "postgres"
-#  password: "63.Lafa.96"
   usuario_url: "msvc-usuario:8001"
-
