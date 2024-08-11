@@ -24,3 +24,4 @@ ENV PORT $PORT_APP
 
 EXPOSE $PORT
 CMD ["java", "-jar", "msvc-usuario-0.0.1-SNAPSHOT.jar"]
+

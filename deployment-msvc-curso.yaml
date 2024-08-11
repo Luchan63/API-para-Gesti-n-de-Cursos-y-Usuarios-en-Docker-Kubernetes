@@ -13,7 +13,7 @@ spec:
         app: msvc-cursos
     spec:
       containers:
-        - image: luchan632/msvc-cursos:v3
+        - image: luchan632/msvc-cursos:v11
           name: msvc-cursos
           ports:
             - containerPort: 8002
