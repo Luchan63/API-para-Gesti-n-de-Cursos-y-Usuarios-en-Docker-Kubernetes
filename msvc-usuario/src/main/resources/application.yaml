@@ -1,0 +1,27 @@
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${LB_AUTH_ISSUER_URI}
+      client:
+        registration:
+          msvc-usuario-client: # nombre a registrar
+            provider: spring # proveedor
+            client-id: usuario-client # el iid del cientes o username
+            client-secret: 12345 # contraseña
+            authorization-grant-type: authorization_code
+            redirect-uri: ${LB_USUARIOS_URI}/authorized # donde nos va a redirigir (hay que crear el empoit)
+            scope:
+              - read
+              - write
+            client-name: msvc-usuario-client # nombre del cliente
+        provider: # proveedor de spring donde se coloca la url qque lo va a autenticar
+          spring:
+            issuer-uri: ${LB_AUTH_ISSUER_URI}
+
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.security.oaut2: DEBUG

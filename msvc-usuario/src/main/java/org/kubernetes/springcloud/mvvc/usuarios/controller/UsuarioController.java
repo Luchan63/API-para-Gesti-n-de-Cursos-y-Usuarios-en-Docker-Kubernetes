@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,9 @@ public class UsuarioController
 
     @Autowired
     private Environment env;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @GetMapping(value = "/list")
     public ResponseEntity<?> listar()
@@ -56,6 +60,8 @@ public class UsuarioController
                     .body(Collections
                             .singletonMap("error", "Email ya existe"));
         }
+
+        ususario.setPassword(passwordEncoder.encode(ususario.getPassword()));
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.guardar(ususario));
     }
 
@@ -79,7 +85,7 @@ public class UsuarioController
             }
             ususarioDb.setNombre(ususario.getNombre());
             ususarioDb.setEmail(ususario.getEmail());
-            ususarioDb.setPassword(ususario.getPassword());
+            ususarioDb.setPassword(passwordEncoder.encode(ususario.getPassword()));
             return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.guardar(ususarioDb));
         }
         return ResponseEntity.notFound().build();
@@ -100,6 +106,12 @@ public class UsuarioController
     public ResponseEntity<?> bucarPorId(@RequestParam List<Long> ids)
     {
       return ResponseEntity.ok(usuarioService.listarPorId(ids));
+    }
+
+    @GetMapping(value = "/authorized")
+    public Map<String, Object> authorized(@RequestParam(name = "code") String code)
+    {
+        return Collections.singletonMap("code", code);
     }
 
     private ResponseEntity<Map<String, String>> validar(BindingResult result) {

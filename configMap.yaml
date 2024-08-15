@@ -8,7 +8,10 @@
     db_host: "mysql8:3306"
     database: "msvc_usuarios"
     curso_url: "msvc-cursos:8002"
-    msvc-usuario.yml: |-
+    lb_auth_issuer_uri: "http://host.docker.internal:51258"
+    lb_usuarios_uri: "http://host.docker.internal:51234"
+
+    application.yml: |-
       config:
         texto: Configurando ambiente por defecto
       ---  
