@@ -14,7 +14,7 @@ spec:
         app: msvc-auth
     spec:
       containers:
-        - image: luchan632/msvc-auth2:v5
+        - image: luchan632/msvc-auth2:v11 #no borrar la imagen 6 y la 10, la 11 es solo utilizando la configuracion de kubernetes, la 12 es con el csrf desabilitado
           name: msvc-auth
           ports:
             - containerPort: 9000

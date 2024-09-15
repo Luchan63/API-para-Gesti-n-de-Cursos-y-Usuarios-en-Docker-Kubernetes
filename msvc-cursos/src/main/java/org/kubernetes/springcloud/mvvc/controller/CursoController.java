@@ -24,8 +24,8 @@ public class CursoController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Curso> detalle(@PathVariable Long id) {
-        Optional<Curso> cursos = cursoService.porIdConUsuario(id); //cursoService.buscarPorId(id);
+    public ResponseEntity<Curso> detalle(@PathVariable Long id,  @RequestHeader(value = "Authorization", required = true) String token) {
+        Optional<Curso> cursos = cursoService.porIdConUsuario(id, token); //cursoService.buscarPorId(id);
         if (cursos.isPresent()) {
             return ResponseEntity.ok(cursos.get());
         }
@@ -69,10 +69,10 @@ public class CursoController {
     }
 
     @PutMapping(value = "/asignar-usuario/{cursoId}")
-    public ResponseEntity<?> asignarUsuario(@PathVariable Long cursoId, @RequestBody Usuario usuario) {
+    public ResponseEntity<?> asignarUsuario(@PathVariable Long cursoId, @RequestBody Usuario usuario , @RequestHeader(value = "Authorization", required = true) String token) {
         Optional<Usuario> usuarios;
         try {
-            usuarios = cursoService.asignarUsuario(usuario, cursoId);
+            usuarios = cursoService.asignarUsuario(usuario, cursoId, token);
         } catch (FeignException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(Collections.singletonMap("mensaje",
@@ -87,10 +87,10 @@ public class CursoController {
     }
 
     @PostMapping(value = "/crear-usuario/{cursoId}")
-    public ResponseEntity<?> crearUsuario(@RequestBody Usuario usuario, @PathVariable Long cursoId) {
+    public ResponseEntity<?> crearUsuario(@RequestBody Usuario usuario, @PathVariable Long cursoId, @RequestHeader(value = "Authorization", required = true) String token) {
         Optional<Usuario> usuarios;
         try {
-            usuarios = cursoService.crearUsuario(usuario, cursoId);
+            usuarios = cursoService.crearUsuario(usuario, cursoId,token);
         } catch (FeignException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(Collections.singletonMap("mensaje",
@@ -105,10 +105,10 @@ public class CursoController {
     }
 
     @DeleteMapping(value = "/eliminar-usuario/{cursoId}")
-    public ResponseEntity<?> eliminarUsuario(@RequestBody Usuario usuario, @PathVariable Long cursoId) {
+    public ResponseEntity<?> eliminarUsuario(@RequestBody Usuario usuario, @PathVariable Long cursoId, @RequestHeader(value = "Authorization", required = true) String token) {
         Optional<Usuario> usuarios;
         try {
-            usuarios = cursoService.eliminarUsuario(usuario, cursoId);
+            usuarios = cursoService.eliminarUsuario(usuario, cursoId, token);
         } catch (FeignException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(Collections.singletonMap("mensaje",

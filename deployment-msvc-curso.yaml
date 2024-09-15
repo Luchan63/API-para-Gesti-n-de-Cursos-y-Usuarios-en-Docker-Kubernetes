@@ -13,7 +13,7 @@ spec:
         app: msvc-cursos
     spec:
       containers:
-        - image: luchan632/msvc-cursos:v11
+        - image: luchan632/msvc-cursos:v13 # no borrar la 11,12,13
           name: msvc-cursos
           ports:
             - containerPort: 8002

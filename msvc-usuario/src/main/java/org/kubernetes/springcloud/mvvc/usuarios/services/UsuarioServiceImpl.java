@@ -1,7 +1,7 @@
 package org.kubernetes.springcloud.mvvc.usuarios.services;
 
 import org.kubernetes.springcloud.mvvc.usuarios.client.CursoFeingClient;
-import org.kubernetes.springcloud.mvvc.usuarios.models.entity.Ususario;
+import org.kubernetes.springcloud.mvvc.usuarios.models.entity.Usuario;
 import org.kubernetes.springcloud.mvvc.usuarios.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,13 +21,13 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Ususario> listar() {
-        return (List<Ususario>) usuarioRepository.findAll();
+    public List<Usuario> listar() {
+        return (List<Usuario>) usuarioRepository.findAll();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Ususario> buscarPorId(Long id) {
+    public Optional<Usuario> buscarPorId(Long id) {
         return usuarioRepository.findById(id);
     }
 
@@ -40,12 +40,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     @Transactional
-    public Ususario guardar(Ususario ususario) {
-        return usuarioRepository.save(ususario);
+    public Usuario guardar(Usuario usuario) {
+        return usuarioRepository.save(usuario);
     }
 
     @Override
-    public Optional<Ususario> buscarPorEmail(String email) {
+    public Optional <Usuario> buscarPorEmail(String email) {
         return usuarioRepository.findByEmail(email);
     }
 
@@ -56,7 +56,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Ususario> listarPorId(Iterable<Long> ids) {
-        return (List<Ususario>) usuarioRepository.findAllById(ids);
+    public List<Usuario> listarPorId(Iterable<Long> ids) {
+        return (List<Usuario>) usuarioRepository.findAllById(ids);
     }
 }

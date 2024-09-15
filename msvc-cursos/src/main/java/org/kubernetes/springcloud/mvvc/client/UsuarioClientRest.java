@@ -10,11 +10,11 @@ import java.util.List;
 public interface UsuarioClientRest {
 
     @GetMapping(value = "/{id}")
-    Usuario detalle(@PathVariable Long id);
+    Usuario detalle(@PathVariable Long id, @RequestHeader(value = "Authorization", required = true) String token);
 
     @PostMapping(value = "/insert")
-    Usuario save(@RequestBody Usuario usuario);
+    Usuario save(@RequestBody Usuario usuario, @RequestHeader(value = "Authorization", required = true) String token);
 
     @GetMapping(value = "/usuario-por-curso")
-    List<Usuario> bucarPorId(@RequestParam Iterable<Long> ids);
+    List<Usuario> bucarPorId(@RequestParam Iterable<Long> ids, @RequestHeader(value = "Authorization", required = true) String token);
 }

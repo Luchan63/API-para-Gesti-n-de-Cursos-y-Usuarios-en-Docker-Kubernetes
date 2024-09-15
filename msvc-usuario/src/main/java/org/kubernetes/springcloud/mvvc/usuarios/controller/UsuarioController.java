@@ -1,6 +1,6 @@
 package org.kubernetes.springcloud.mvvc.usuarios.controller;
 
-import org.kubernetes.springcloud.mvvc.usuarios.models.entity.Ususario;
+import org.kubernetes.springcloud.mvvc.usuarios.models.entity.Usuario;
 import org.kubernetes.springcloud.mvvc.usuarios.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -38,7 +38,7 @@ public class UsuarioController
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> detalle(@PathVariable Long id)
     {
-        Optional<Ususario> optionalUsusario = usuarioService.buscarPorId(id);
+        Optional<Usuario> optionalUsusario = usuarioService.buscarPorId(id);
         if (optionalUsusario.isPresent())
         {
             return ResponseEntity.ok().body(optionalUsusario.get());
@@ -47,54 +47,54 @@ public class UsuarioController
     }
 
     @PostMapping(value = "/insert")
-    public ResponseEntity<?> crear(@Valid @RequestBody Ususario ususario, BindingResult result)
+    public ResponseEntity<?> crear(@Valid @RequestBody Usuario usuario, BindingResult result)
     {
 
         if (result.hasErrors())
         {
             return validar(result);
         }
-        if (!ususario.getEmail().isEmpty() && usuarioService.buscarPorEmail(ususario.getEmail()).isPresent())
+        if (!usuario.getEmail().isEmpty() && usuarioService.buscarPorEmail(usuario.getEmail()).isPresent())
         {
             return ResponseEntity.badRequest()
                     .body(Collections
                             .singletonMap("error", "Email ya existe"));
         }
 
-        ususario.setPassword(passwordEncoder.encode(ususario.getPassword()));
-        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.guardar(ususario));
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.guardar(usuario));
     }
 
 
-    @PutMapping(value = "update/{id}")
-    public ResponseEntity<?> editar(@Valid @RequestBody Ususario ususario, BindingResult result, @PathVariable Long id) {
+    @PutMapping(value = "/update/{id}")
+    public ResponseEntity<?> editar(@Valid @RequestBody Usuario usuario, BindingResult result, @PathVariable Long id) {
 
         if (result.hasErrors())
         {
             return validar(result);
         }
 
-        Optional<Ususario> optionalUsusario = usuarioService.buscarPorId(id);
+        Optional<Usuario> optionalUsusario = usuarioService.buscarPorId(id);
         if (optionalUsusario.isPresent()) {
-            Ususario ususarioDb = optionalUsusario.get();
-            if (!ususario.getEmail().isEmpty() && !ususario.getEmail().equalsIgnoreCase(ususarioDb.getEmail()) && usuarioService.buscarPorEmail(ususario.getEmail()).isPresent())
+            Usuario usuarioDb = optionalUsusario.get();
+            if (!usuario.getEmail().isEmpty() && !usuario.getEmail().equalsIgnoreCase(usuarioDb.getEmail()) && usuarioService.buscarPorEmail(usuario.getEmail()).isPresent())
             {
                 return ResponseEntity.badRequest()
                         .body(Collections
                                 .singletonMap("error", "Email ya existe"));
             }
-            ususarioDb.setNombre(ususario.getNombre());
-            ususarioDb.setEmail(ususario.getEmail());
-            ususarioDb.setPassword(passwordEncoder.encode(ususario.getPassword()));
-            return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.guardar(ususarioDb));
+            usuarioDb.setNombre(usuario.getNombre());
+            usuarioDb.setEmail(usuario.getEmail());
+            usuarioDb.setPassword(passwordEncoder.encode(usuario.getPassword()));
+            return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.guardar(usuarioDb));
         }
         return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping(value = "delete/{id}")
+    @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id)
     {
-        Optional<Ususario> optionalUsusario = usuarioService.buscarPorId(id);
+        Optional<Usuario> optionalUsusario = usuarioService.buscarPorId(id);
         if (optionalUsusario.isPresent()) {
             usuarioService.eliminar(id);
             return ResponseEntity.noContent().build();
@@ -112,6 +112,16 @@ public class UsuarioController
     public Map<String, Object> authorized(@RequestParam(name = "code") String code)
     {
         return Collections.singletonMap("code", code);
+    }
+
+    @GetMapping(value = "/login")
+    public ResponseEntity<?> login(@RequestParam String email)
+    {
+        Optional<Usuario> optionalUsusario = usuarioService.buscarPorEmail(email);
+        if (optionalUsusario.isPresent()) {
+            return ResponseEntity.ok().body(optionalUsusario.get());
+        }
+        return ResponseEntity.notFound().build();
     }
 
     private ResponseEntity<Map<String, String>> validar(BindingResult result) {

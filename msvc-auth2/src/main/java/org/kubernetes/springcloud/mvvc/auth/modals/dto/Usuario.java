@@ -1,24 +1,12 @@
-package org.kubernetes.springcloud.mvvc.usuarios.models.entity;
+package org.kubernetes.springcloud.mvvc.auth.modals.dto;
 
 
-import javax.validation.constraints.*;
-import javax.persistence.*;
+public class Usuario {
 
-
-@Entity
-@Table(name = "usuarios")
-public class Ususario
-{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
+
     private String nombre;
-    @NotEmpty
-    @Email
-    @Column(unique = true)
     private String email;
-    @NotBlank
     private String password;
 
     public Long getId() {

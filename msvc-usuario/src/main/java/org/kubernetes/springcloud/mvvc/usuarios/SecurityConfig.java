@@ -22,7 +22,7 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/authorized").permitAll()
+                .antMatchers("/authorized","/login").permitAll()
                 .antMatchers(HttpMethod.GET, "/list", "/{id}").hasAnyAuthority("SCOPE_read", "SCOPE_write")
                 .antMatchers(HttpMethod.POST, "/insert").hasAuthority("SCOPE_write")
                 .antMatchers(HttpMethod.PUT, "/update/{id}").hasAuthority("SCOPE_write")
@@ -32,9 +32,8 @@ public class SecurityConfig {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .oauth2Login(oauth2Login -> oauth2Login.loginPage("/oauth2/authorization/msvc-usuario-client"))
-                .csrf().disable()
-                .oauth2Client(withDefaults())
+                .oauth2Login(oauth2Login -> oauth2Login.loginPage("/oauth2/authorization/msvc-usuario-client")).csrf().disable()
+                .oauth2Client(withDefaults()).csrf().disable()
                 .oauth2ResourceServer().jwt();
 
         return http.build();

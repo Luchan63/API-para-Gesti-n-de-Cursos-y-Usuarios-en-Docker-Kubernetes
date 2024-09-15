@@ -1,18 +1,18 @@
 package org.kubernetes.springcloud.mvvc.usuarios.services;
 
-import org.kubernetes.springcloud.mvvc.usuarios.models.entity.Ususario;
+import org.kubernetes.springcloud.mvvc.usuarios.models.entity.Usuario;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface UsuarioService {
-    List<Ususario> listar();
-    Optional<Ususario> buscarPorId(Long id);
+    List<Usuario> listar();
+    Optional<Usuario> buscarPorId(Long id);
     void eliminar(Long id);
-    Ususario guardar(Ususario ususario);
-    Optional<Ususario> buscarPorEmail(String email);
+    Usuario guardar(Usuario usuario);
+    Optional <Usuario> buscarPorEmail(String email);
     boolean existe(String email);
 
-    List<Ususario>listarPorId(Iterable<Long> ids);
+    List<Usuario>listarPorId(Iterable<Long> ids);
 
 }

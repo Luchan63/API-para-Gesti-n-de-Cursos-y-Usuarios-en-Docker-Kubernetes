@@ -14,7 +14,6 @@ spring:
             redirect-uri: ${LB_USUARIOS_URI}/authorized # donde nos va a redirigir (hay que crear el empoit)
             scope:
               - read
-              - write
             client-name: msvc-usuario-client # nombre del cliente
         provider: # proveedor de spring donde se coloca la url qque lo va a autenticar
           spring:
