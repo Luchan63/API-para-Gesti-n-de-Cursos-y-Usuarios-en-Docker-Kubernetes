@@ -43,7 +43,7 @@ Este proyecto es una API REST desarrollada para gestionar cursos y usuarios, imp
 ## Instrucciones de Uso
 
 <p >
-- Clonar codigo
+Clonar codigo
 </p>
 
 ````
